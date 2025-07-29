@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sorting Algorithm Visualizer</title>
+    
+    <!-- External CSS -->
+    <link rel="stylesheet" href="style.css">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Chart.js for comparison graph -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <!-- Tone.js for sound effects -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.7.77/Tone.js"></script>
+    
+    <!-- Google Fonts: Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body class="min-h-screen flex flex-col items-center justify-center p-4">
+
+    <!-- Main Application Wrapper -->
+    <div class="w-full max-w-7xl mx-auto bg-gray-800 rounded-2xl shadow-2xl p-4 sm:p-6 lg:p-8 flex flex-col">
+        
+        <!-- Header -->
+        <header class="text-center mb-4">
+            <h1 class="text-3xl sm:text-4xl font-bold text-white tracking-tight">Sorting Algorithm Visualizer</h1>
+            <p class="text-gray-400 mt-1">Watch sorting algorithms in action.</p>
+        </header>
+
+        <!-- Controls Panel -->
+        <div id="controls-panel" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 mb-6 items-center flex-wrap p-4 bg-gray-900/50 rounded-lg border border-gray-700">
+            <!-- Algorithm Selection -->
+            <div class="col-span-2 md:col-span-1">
+                <label for="algorithm" class="block text-sm font-medium text-gray-300 mb-1">Algorithm</label>
+                <select id="algorithm" class="w-full bg-gray-700 border border-gray-600 text-white rounded-lg p-2 focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                    <option value="mergeSort">Merge Sort</option>
+                    <option value="quickSort">Quick Sort</option>
+                    <option value="selectionSort">Selection Sort</option>
+                </select>
+            </div>
+
+            <!-- Array Size Slider -->
+            <div class="col-span-1">
+                <label for="size" class="block text-sm font-medium text-gray-300 mb-1">Size (<span id="size-value">50</span>)</label>
+                <input id="size" type="range" min="10" max="100" value="50" class="w-full h-2 rounded-lg cursor-pointer">
+            </div>
+
+            <!-- Speed Slider -->
+            <div class="col-span-1">
+                <label for="speed" class="block text-sm font-medium text-gray-300 mb-1">Speed (<span id="speed-value">50</span>)</label>
+                <input id="speed" type="range" min="1" max="100" value="50" class="w-full h-2 rounded-lg cursor-pointer">
+            </div>
+
+            <!-- Main Action Buttons -->
+            <div class="col-span-2 lg:col-span-2 grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-2 gap-2">
+                <button id="generate-array" class="w-full col-span-1 sm:col-span-2 lg:col-span-1 bg-gray-600 hover:bg-gray-500 text-white font-bold py-2 px-4 rounded-lg transition-colors">New Array</button>
+                <button id="sort" class="w-full col-span-1 sm:col-span-2 lg:col-span-1 bg-blue-600 hover:bg-blue-500 text-white font-bold py-2 px-4 rounded-lg transition-colors">Sort</button>
+            </div>
+        </div>
+
+        <!-- Visualization Area -->
+        <div id="visualizer" class="flex-grow w-full bg-gray-900/50 rounded-lg p-4 min-h-[50vh] flex justify-center items-end border border-gray-700 overflow-hidden">
+            <!-- Array boxes will be injected here by JavaScript -->
+        </div>
+        
+        <!-- Secondary Controls & Info -->
+        <div class="mt-4 flex flex-col sm:flex-row justify-between items-center gap-4">
+            <div class="flex gap-2">
+                <button id="pause-resume" class="bg-yellow-600 hover:bg-yellow-500 text-white font-bold py-2 px-4 rounded-lg transition-colors disabled:bg-gray-500 disabled:cursor-not-allowed" disabled>Pause</button>
+                <button id="restart" class="bg-red-600 hover:bg-red-500 text-white font-bold py-2 px-4 rounded-lg transition-colors disabled:bg-gray-500 disabled:cursor-not-allowed" disabled>Restart</button>
+            </div>
+            <div class="flex gap-2">
+                 <button id="info-btn" class="bg-indigo-600 hover:bg-indigo-500 text-white font-bold py-2 px-4 rounded-lg transition-colors">Algorithm Info</button>
+                 <button id="graph-btn" class="bg-teal-600 hover:bg-teal-500 text-white font-bold py-2 px-4 rounded-lg transition-colors">Performance Graph</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Algorithm Info Modal -->
+    <div id="info-modal" class="fixed inset-0 z-50 items-center justify-center hidden modal-backdrop">
+        <div class="bg-gray-800 rounded-lg shadow-xl p-6 w-11/12 max-w-2xl border border-gray-600">
+            <div class="flex justify-between items-center mb-4">
+                <h2 id="info-title" class="text-2xl font-bold text-white">Algorithm Information</h2>
+                <button id="close-info-modal" class="text-gray-400 hover:text-white">&times;</button>
+            </div>
+            <div id="info-content" class="text-gray-300 space-y-4">
+                <!-- Info content will be injected here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Performance Graph Modal -->
+    <div id="graph-modal" class="fixed inset-0 z-50 items-center justify-center hidden modal-backdrop">
+        <div class="bg-gray-800 rounded-lg shadow-xl p-6 w-11/12 max-w-4xl border border-gray-600">
+            <div class="flex justify-between items-center mb-4">
+                <h2 class="text-2xl font-bold text-white">Performance Graph (Time vs. Size)</h2>
+                <button id="close-graph-modal" class="text-gray-400 hover:text-white">&times;</button>
+            </div>
+            <div class="text-gray-300">
+                <p class="mb-2">Shows a comparison of algorithm performance using predefined data to illustrate time complexity.</p>
+                <canvas id="performance-chart"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <!-- External JavaScript -->
+    <script src="script.js" type="module" defer></script>
+</body>
+</html>
