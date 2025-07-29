@@ -34,7 +34,7 @@ Whether you're a curious beginner taking your first exciting steps into computer
 
 ---
 
-## 🎨 Features: Command Your Algorithmic Journey! 🚀 컨트롤
+## 🎨 Features: Command Your Algorithmic Journey! 🚀
 
 SortExplorer is packed with powerful and intuitive features designed to make learning and exploration an absolute delight:
 
@@ -46,56 +46,4 @@ SortExplorer is packed with powerful and intuitive features designed to make lea
 | **💡 Deeper Insights** | Understand the **unique approach** of each algorithm. Discern its time complexity, stability, and ideal suitability for various datasets. *(Optional: Add "📈 Performance Metrics: Real-time counts of comparisons, swaps, or execution time." if you have this.)* | 🤔🔍             |
 | **📱 Universal Access** | Enjoy a **seamless and responsive experience** across all your devices – desktops, laptops, tablets, and smartphones.                                                                                     | 💻📱            |
 
----
 
-## 📸 Glimpse Into the Visualizer
-
-See SortExplorer in action!
-
-*(Remember to upload these images to your repo and update the paths.)*
-
-<p align="center">
-  <img src="images/screenshot-bubble.png" alt="Bubble Sort in action" width="400" style="margin: 10px;"/>
-  <img src="images/screenshot-quick.png" alt="Quick Sort partitioning" width="400" style="margin: 10px;"/>
-  <br>
-  <em>A vibrant demonstration of the Bubble Sort algorithm. &nbsp;&nbsp;&nbsp; Quick Sort partitioning elements with speed control enabled.</em>
-</p>
-
----
-
-## 🚀 Getting Started: Bring the Code to Life!
-
-To set up this mesmerizing visualizer on your local machine, follow these simple steps.
-
-### Prerequisites
-
-Ensure you have these foundational tools installed:
-
-* [**Node.js**](https://nodejs.org/) (LTS version recommended)
-* [**npm**](https://www.npmjs.com/) or [**Yarn**](https://yarnpkg.com/) (your preferred package manager)
-
-### Installation Guide
-
-1.  **Clone the repository:**
-    ```bash
-    git clone [https://github.com/](https://github.com/)[your-username]/[your-repo-name].git
-    ```
-2.  **Navigate into the project directory:**
-    ```bash
-    cd [your-repo-name]
-    ```
-3.  **Install project dependencies:**
-    ```bash
-    npm install
-    # OR
-    yarn install
-    ```
-
-### Running Locally: Development Server
-
-To fire up the application in development mode:
-
-```bash
-npm start
-# OR
-yarn start
